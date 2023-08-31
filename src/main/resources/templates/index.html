@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru" xxmlns:th="http://www.thymeleaf.org" xmlns:xxmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Сортировка массива пузырьковым методом</title>
+    <link rel="stylesheet" th:href="@{styles.css}" />
+</head>
+<body>
+<h1>Сортировка массива пузырьковым методом</h1>
+<p>Введите целые численные значения через запятую, выберите тип сортировки и подтвердите отправку</p>
+<form method="post" action='/array'>
+    <fieldset>
+        <label for="array">Введите целые числа через запятую: <input id="array" name="arrayDto" type="text" required /></label>
+        <label for="array">Под каким названием сохранить сортировку: <input id="arrayName" name="arrayName" type="text" required /></label>
+    </fieldset>
+    <fieldset>
+        <label for="sort-type">Выберите тип сортировки:
+            <select id="sort-type" name="sort" required>
+                <option value="">(выберите тип сортировки)</option>
+                <option value="ASC">по возрастанию</option>
+                <option value="DESC">по убыванию</option>
+            </select>
+        </label>
+    </fieldset>
+    <input type="submit" value="Отправить" />
+</form>
+</body>
+</html>
