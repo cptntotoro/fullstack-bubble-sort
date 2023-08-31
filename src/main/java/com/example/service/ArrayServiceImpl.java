@@ -34,16 +34,14 @@ public class ArrayServiceImpl implements ArrayService {
 
         switch(sort) {
             case ASC:
-                int[] array = sortMinToMax(arrayDto.getArray());
-//        int[] array = sortBubble(arrayDto.getArray(), Sort.ASC);
+                int[] array = sortBubble(arrayDto.getArray(), Sort.ASC);
 
                 for (int i : array) {
                     arrayValueRepository.save(new ArrayValue(arraySaved, i, Sort.ASC));
                 }
                 break;
             case DESC:
-                array = sortMaxToMin(arrayDto.getArray());
-//        array = sortBubble(arrayDto.getArray(), Sort.DESC);
+                array = sortBubble(arrayDto.getArray(), Sort.DESC);
 
                 for (int i : array) {
                     arrayValueRepository.save(new ArrayValue(arraySaved, i, Sort.DESC));
@@ -57,7 +55,7 @@ public class ArrayServiceImpl implements ArrayService {
         List<Integer> arrayValues = arrayValueRepository.findAllByArrayName(arrayName);
 
         if (arrayValues.isEmpty()) {
-            throw new ArrayNotFoundException("Массив с именем " + arrayName + " не найден.");
+            throw new ArrayNotFoundException("Array with name = " + arrayName + " doesn't exist.");
         }
 
         int[] array = new int[arrayValues.size()];
@@ -67,47 +65,12 @@ public class ArrayServiceImpl implements ArrayService {
         }
 
         return new ArrayDto(array);
-
-//        int arraySize = (int) arrayRepository.count();
-//
-//        int[] array = new int[arraySize];
-//
-//        for (int i = 0; i < array.length - 1; i++) {
-//            array[i] = arrayRepository.findOne(i +  1).getValue();
-//        }
-//
-////        arrayRepository.deleteAll();
-//
-//        return new ArrayDto(array);
     }
 
-//    private int[] sortBubble(int[] array, Sort sort) {
-//        for (int i = 0; i < array.length - 1; i++) {
-//            for (int j = 0; j < array.length - 1 - i; j++) {
-//                switch (sort) {
-//                    case ASC:
-//                        if (array[j + 1] < array[j]) {
-//                            int tmp = array[j];
-//                            array[j] = array[j + 1];
-//                            array[j + 1] = tmp;
-//                        }
-//                    case DESC:
-//                        if (array[j] < array[j  + 1]) {
-//                            int tmp = array[j];
-//                            array[j] = array[j + 1];
-//                            array[j + 1] = tmp;
-//                        }
-//                }
-//            }
-//        }
-//        return array;
-//    }
-
-    private int[] sortMinToMax(int[] arrayToSort) {
-        int[] array = arrayToSort;
+    private int[] sortBubble(int[] array, Sort sort) {
         for (int i = 0; i < array.length - 1; i++) {
             for (int j = 0; j < array.length - 1 - i; j++) {
-                if (array[j + 1] < array[j]) {
+                if (checkNeighbor(array[j + 1], array[j], sort)) {
                     int tmp = array[j];
                     array[j] = array[j + 1];
                     array[j + 1] = tmp;
@@ -117,18 +80,11 @@ public class ArrayServiceImpl implements ArrayService {
         return array;
     }
 
-    private int[] sortMaxToMin(int[] arrayToSort) {
-        int[] array = arrayToSort;
-        for (int i = 0; i < array.length - 1; i++) {
-            for (int j = 0; j < array.length - 1 - i; j++) {
-                if (array[j] < array[j  + 1]) {
-                    int tmp = array[j];
-                    array[j] = array[j + 1];
-                    array[j + 1] = tmp;
-                }
-            }
+    private boolean checkNeighbor(int first, int second, Sort sort) {
+        if (sort == Sort.ASC) {
+            return first < second;
         }
-        return array;
+        return second < first;
     }
 }
 
