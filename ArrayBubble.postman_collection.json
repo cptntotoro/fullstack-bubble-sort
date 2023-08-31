@@ -1,0 +1,356 @@
+{
+	"info": {
+		"_postman_id": "8d671842-d5bf-4ce4-9522-ebf0c307586f",
+		"name": "ArrayBubble",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26102268"
+	},
+	"item": [
+		{
+			"name": "Array 1 ASC create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"array\": [23, 44, 76, 34, 98]\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/array?arrayName=first_array&sort=ASC",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"array"
+					],
+					"query": [
+						{
+							"key": "arrayName",
+							"value": "first_array"
+						},
+						{
+							"key": "sort",
+							"value": "ASC"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Array empty 400",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"array\": []\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/array?arrayName=fail_array&sort=ASC",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"array"
+					],
+					"query": [
+						{
+							"key": "arrayName",
+							"value": "fail_array"
+						},
+						{
+							"key": "sort",
+							"value": "ASC"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Array symbols 400",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"array\": [\"b\", \"c\", \"a\", \"g\"]\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/array?arrayName=fail_array&sort=ASC",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"array"
+					],
+					"query": [
+						{
+							"key": "arrayName",
+							"value": "fail_array"
+						},
+						{
+							"key": "sort",
+							"value": "ASC"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Array duplicate name 400",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"array\": [23, 44, 76, 34, 98]\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/array?arrayName=first_array&sort=ASC",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"array"
+					],
+					"query": [
+						{
+							"key": "arrayName",
+							"value": "first_array"
+						},
+						{
+							"key": "sort",
+							"value": "ASC"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Array 1 DESC create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"array\": [23, 44, 76, 34, 98]\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/array?arrayName=second_array&sort=DESC",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"array"
+					],
+					"query": [
+						{
+							"key": "arrayName",
+							"value": "second_array"
+						},
+						{
+							"key": "sort",
+							"value": "DESC"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Array 1 ASC get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Has user update response\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"Test user 'array' field\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('array');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/array?arrayName=first_array",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"array"
+					],
+					"query": [
+						{
+							"key": "arrayName",
+							"value": "first_array"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Array get not found 404",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/array?arrayName=notfound",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"array"
+					],
+					"query": [
+						{
+							"key": "arrayName",
+							"value": "notfound"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}

@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.dto.ArrayDto;
+import com.example.exceptioin.ArrayIsEmptyException;
 import com.example.model.Sort;
 import com.example.service.ArrayService;
 import lombok.RequiredArgsConstructor;
@@ -22,15 +23,18 @@ public class ArrayController {
 
     @PostMapping("/array")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public void add(@Valid @RequestBody ArrayDto arrayDto, @RequestParam @NotNull String arrayName) {
+    public void add(@Valid @RequestBody ArrayDto arrayDto, @RequestParam @NotNull String arrayName, @RequestParam @NotNull Sort sort) {
         log.info("Calling POST: /array with 'arrayDto': {}, 'arrayName: {}", arrayDto.toString(), arrayName);
-        arrayService.add(arrayDto, arrayName);
+        if (arrayDto.getArray().length == 0) {
+            throw new ArrayIsEmptyException("Array must not be empty.");
+        }
+        arrayService.add(arrayDto, arrayName, sort);
     }
 
     @GetMapping("/array")
-    public ArrayDto get(@RequestParam @NotNull Integer id, @RequestParam @NotNull Sort sort) {
-        log.info("Calling GET: /array with 'id': {}, 'sort: {}", id, sort.toString());
-        return arrayService.get(id, sort);
+    public ArrayDto get(@RequestParam @NotNull String arrayName) {
+        log.info("Calling GET: /array with 'arrayName': {}", arrayName);
+        return arrayService.get(arrayName);
     }
 
 }

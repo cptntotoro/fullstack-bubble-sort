@@ -5,7 +5,7 @@ import com.example.model.Sort;
 
 public interface ArrayService {
 
-    void add(ArrayDto arrayDto, String arrayName);
+    void add(ArrayDto arrayDto, String arrayName, Sort sort);
 
-    ArrayDto get(Integer id, Sort sort);
+    ArrayDto get(String arrayName);
 }
