@@ -22,7 +22,7 @@ public class ArrayServiceImpl implements ArrayService {
     private final ArrayValueRepository arrayValueRepository;
 
     @Override
-    public void add(ArrayDto arrayDto, String arrayName) {
+    public void add(ArrayDto arrayDto, String arrayName, Sort sort) {
 
         Array arraySaved;
 
@@ -32,27 +32,32 @@ public class ArrayServiceImpl implements ArrayService {
             throw new SQLConstraintViolationException("Array with name = " + arrayName + " already exists.");
         }
 
-        int[] array = sortMinToMax(arrayDto.getArray());
+        switch(sort) {
+            case ASC:
+                int[] array = sortMinToMax(arrayDto.getArray());
 //        int[] array = sortBubble(arrayDto.getArray(), Sort.ASC);
 
-        for (int i : array) {
-            arrayValueRepository.save(new ArrayValue(arraySaved, i, Sort.ASC));
-        }
-
-        array = sortMaxToMin(arrayDto.getArray());
+                for (int i : array) {
+                    arrayValueRepository.save(new ArrayValue(arraySaved, i, Sort.ASC));
+                }
+                break;
+            case DESC:
+                array = sortMaxToMin(arrayDto.getArray());
 //        array = sortBubble(arrayDto.getArray(), Sort.DESC);
 
-        for (int i : array) {
-            arrayValueRepository.save(new ArrayValue(arraySaved, i, Sort.DESC));
+                for (int i : array) {
+                    arrayValueRepository.save(new ArrayValue(arraySaved, i, Sort.DESC));
+                }
+                break;
         }
     }
 
     @Override
-    public ArrayDto get(Integer id, Sort sort) {
-        List<Integer> arrayValues = arrayValueRepository.findAllByArrayIdAndSort(id, sort);
+    public ArrayDto get(String arrayName) {
+        List<Integer> arrayValues = arrayValueRepository.findAllByArrayName(arrayName);
 
         if (arrayValues.isEmpty()) {
-            throw new ArrayNotFoundException("Массив с id = " + id + " и параметром сортировки sort = " + sort + " не найден.");
+            throw new ArrayNotFoundException("Массив с именем " + arrayName + " не найден.");
         }
 
         int[] array = new int[arrayValues.size()];
