@@ -1,5 +1,5 @@
 # Bubble Sort - веб-приложение для сортировки введенного массива пузырьковым методом
-Java, Spring Boot, Spring JPA, PostgreSQL, REST API, Lombok
+Java, Spring Boot, Spring JPA, PostgreSQL, REST API, Lombok, Thymeleaf, HTML, CSS
 
 ## О проекте
 Задание:
