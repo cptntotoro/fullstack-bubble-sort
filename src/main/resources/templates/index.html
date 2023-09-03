@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru" xxmlns:th="http://www.thymeleaf.org" xmlns:xxmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Сортировка массива пузырьковым методом</title>
+    <link rel="stylesheet" th:href="@{styles.css}" />
+    <script type="text/javascript" th:src="@{index.js}"></script>
+</head>
+<body>
+<h1>Сортировка массива пузырьковым методом</h1>
+<p>Введите целые численные значения через запятую, выберите тип сортировки и подтвердите отправку</p>
+
+<form th:action="@{/array}" th:object="${arrayDtoInput}" method="post">
+    <fieldset>
+        <label for="array">
+            Введите целые числа через запятую:
+            <input id="array" th:field="*{array}" type="text" placeholder="35, 67, 12, 48" required />
+        </label>
+        <label for="array">
+            Под каким названием сохранить сортировку:
+            <input id="arrayName" th:field="*{arrayName}" type="text" placeholder="new-array" required />
+        </label>
+    </fieldset>
+    <fieldset>
+        <label for="sort-type">Выберите тип сортировки:
+            <select id="sort-type" th:field="*{sort}" required>
+                <option value="">(выберите тип сортировки)</option>
+                <option value="ASC">по возрастанию</option>
+                <option value="DESC">по убыванию</option>
+            </select>
+        </label>
+    </fieldset>
+    <input type="submit" value="Отправить" />
+</form>
+
+<div th:if="${selectArrayOptions.size > 0}">
+    <form class="savedArrays" method="get" action='/array'>
+        <fieldset>
+            <label for="sort-name">Выберите название сортировки:
+                <select id="sort-name" name="arrayId" required>
+<!--                    foreach slectionsName-->
+                    <option value="">(выберите название сортировки)</option>
+                    <option th:each="option : ${selectArrayOptions}" th:value="${option.id}" th:text="${option.name}"></option>
+                </select>
+            </label>
+        </fieldset>
+        <input type="submit" value="Отправить" />
+    </form>
+
+    <p th:if="${result}">Результат: <span th:text="${result}"></span></p>
+</div>
+
+</body>
+</html>
