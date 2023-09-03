@@ -28,11 +28,7 @@ public class ArrayController {
     public String getHomepage(Model model) {
         log.info("Calling GET: /");
 
-        ArrayDtoInput arrayDtoInput = new ArrayDtoInput();
-        model.addAttribute("arrayDtoInput", arrayDtoInput);
-
-        List<Array> savedArrays = arrayService.getAllArrays();
-        model.addAttribute("selectArrayOptions", savedArrays);
+        addAttributes(model);
 
         return "index";
     }
@@ -48,11 +44,7 @@ public class ArrayController {
 
         arrayService.add(arrayDto.getArray(), arrayDto.getArrayName(), Sort.valueOf(arrayDto.getSort()));
 
-        ArrayDtoInput arrayDtoInput = new ArrayDtoInput();
-        model.addAttribute("arrayDtoInput", arrayDtoInput);
-
-        List<Array> savedArrays = arrayService.getAllArrays();
-        model.addAttribute("selectArrayOptions", savedArrays);
+        addAttributes(model);
 
         return "index";
     }
@@ -61,15 +53,19 @@ public class ArrayController {
     public String getArray(@RequestParam Integer arrayId, Model model) {
         log.info("Calling GET: /array with 'arrayId': {}", arrayId);
 
-        ArrayDtoInput arrayDtoInput = new ArrayDtoInput();
-        model.addAttribute("arrayDtoInput", arrayDtoInput);
-
-        List<Array> savedArrays = arrayService.getAllArrays();
-        model.addAttribute("selectArrayOptions", savedArrays);
+        addAttributes(model);
 
         String result = arrayService.getArrayById(arrayId);
         model.addAttribute("result", result);
 
         return "index";
+    }
+
+    private void addAttributes(Model model) {
+        ArrayDtoInput arrayDtoInput = new ArrayDtoInput();
+        model.addAttribute("arrayDtoInput", arrayDtoInput);
+
+        List<Array> savedArrays = arrayService.getAllArrays();
+        model.addAttribute("selectArrayOptions", savedArrays);
     }
 }
