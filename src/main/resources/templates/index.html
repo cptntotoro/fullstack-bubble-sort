@@ -8,7 +8,6 @@
 </head>
 <body>
 <h1>Сортировка массива пузырьковым методом</h1>
-<p>Введите целые численные значения через запятую, выберите тип сортировки и подтвердите отправку</p>
 
 <form th:action="@{/array}" th:object="${arrayDtoInput}" method="post">
     <fieldset>
@@ -38,7 +37,6 @@
         <fieldset>
             <label for="sort-name">Выберите название сортировки:
                 <select id="sort-name" name="arrayId" required>
-<!--                    foreach slectionsName-->
                     <option value="">(выберите название сортировки)</option>
                     <option th:each="option : ${selectArrayOptions}" th:value="${option.id}" th:text="${option.name}"></option>
                 </select>
