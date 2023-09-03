@@ -1,11 +1,16 @@
 package com.example.service;
 
-import com.example.dto.ArrayDto;
+import com.example.model.Array;
 import com.example.model.Sort;
+
+import java.util.List;
 
 public interface ArrayService {
 
-    void add(ArrayDto arrayDto, String arrayName, Sort sort);
+    void add(String arrayString, String arrayName, Sort sort);
 
-    ArrayDto get(String arrayName);
+    List<Array> getAllArrays();
+
+    String getArrayById(Integer id);
+
 }

@@ -1,6 +1,5 @@
 package com.example.service;
 
-import com.example.dto.ArrayDto;
 import com.example.exceptioin.ArrayNotFoundException;
 import com.example.exceptioin.SQLConstraintViolationException;
 import com.example.model.Array;
@@ -13,6 +12,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +22,14 @@ public class ArrayServiceImpl implements ArrayService {
     private final ArrayValueRepository arrayValueRepository;
 
     @Override
-    public void add(ArrayDto arrayDto, String arrayName, Sort sort) {
+    public void add(String arrayString, String arrayName, Sort sort) {
+        String[] split = arrayString.split(",");
+
+        int[] arrayFromString = new int[split.length];
+
+        for (int i = 0; i < split.length; i++) {
+            arrayFromString[i] = Integer.parseInt(split[i].trim());
+        }
 
         Array arraySaved;
 
@@ -34,14 +41,14 @@ public class ArrayServiceImpl implements ArrayService {
 
         switch(sort) {
             case ASC:
-                int[] array = sortBubble(arrayDto.getArray(), Sort.ASC);
+                int[] array = sortBubble(arrayFromString, Sort.ASC);
 
                 for (int i : array) {
                     arrayValueRepository.save(new ArrayValue(arraySaved, i, Sort.ASC));
                 }
                 break;
             case DESC:
-                array = sortBubble(arrayDto.getArray(), Sort.DESC);
+                array = sortBubble(arrayFromString, Sort.DESC);
 
                 for (int i : array) {
                     arrayValueRepository.save(new ArrayValue(arraySaved, i, Sort.DESC));
@@ -51,20 +58,19 @@ public class ArrayServiceImpl implements ArrayService {
     }
 
     @Override
-    public ArrayDto get(String arrayName) {
-        List<Integer> arrayValues = arrayValueRepository.findAllByArrayName(arrayName);
+    public List<Array> getAllArrays() {
+        return arrayRepository.findAll();
+    }
+
+    @Override
+    public String getArrayById(Integer id) {
+        List<Integer> arrayValues = arrayValueRepository.findAllByArrayId(id);
 
         if (arrayValues.isEmpty()) {
-            throw new ArrayNotFoundException("Array with name = " + arrayName + " doesn't exist.");
+            throw new ArrayNotFoundException("Array with id = " + id + " doesn't exist.");
         }
 
-        int[] array = new int[arrayValues.size()];
-
-        for (int i = 0; i < array.length; i++) {
-            array[i] = arrayValues.get(i);
-        }
-
-        return new ArrayDto(array);
+        return arrayValues.stream().map(String::valueOf).collect(Collectors.joining(", "));
     }
 
     private int[] sortBubble(int[] array, Sort sort) {
@@ -87,4 +93,3 @@ public class ArrayServiceImpl implements ArrayService {
         return second < first;
     }
 }
-
