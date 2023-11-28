@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ArrayService {
 
-    void add(String arrayString, String arrayName, Sort sort);
+    Array add(String arrayString, String arrayName, Sort sort);
 
     List<Array> getAllArrays();
 

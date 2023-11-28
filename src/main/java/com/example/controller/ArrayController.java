@@ -35,30 +35,27 @@ public class ArrayController {
 
     @PostMapping(path = "/array")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public String sendArray(@Valid @ModelAttribute("arrayDto") ArrayDtoInput arrayDto, Model model) {
+    @ResponseBody
+    public Array sendArray(@Valid @ModelAttribute("arrayDto") ArrayDtoInput arrayDto) {
         log.info("Calling POST: /array with 'arrayDto': {}", arrayDto.toString());
 
         if (arrayDto.getArray().length() == 0) {
             throw new ArrayIsEmptyException("Array must not be empty.");
         }
 
-        arrayService.add(arrayDto.getArray(), arrayDto.getArrayName(), Sort.valueOf(arrayDto.getSort()));
+        Array array = arrayService.add(arrayDto.getArray(), arrayDto.getArrayName(), Sort.valueOf(arrayDto.getSort()));
 
-        addAttributes(model);
-
-        return "index";
+        return array;
     }
 
     @GetMapping(path = "/array")
-    public String getArray(@RequestParam Integer arrayId, Model model) {
+    @ResponseBody
+    public String getArray(@RequestParam Integer arrayId) {
         log.info("Calling GET: /array with 'arrayId': {}", arrayId);
 
-        addAttributes(model);
-
         String result = arrayService.getArrayById(arrayId);
-        model.addAttribute("result", result);
 
-        return "index";
+        return result;
     }
 
     private void addAttributes(Model model) {
