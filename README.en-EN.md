@@ -1,7 +1,7 @@
 [![Language](https://img.shields.io/badge/Language-Russian-blue.svg)](README.md)
 
 # Bubble Sort - web app for array bubble sorting 
-Java, Spring Boot, Spring JPA, PostgreSQL, REST API, Lombok, Thymeleaf, HTML, CSS
+Java, Spring Spring (Boot, Data, MVC), PostgreSQL, REST API, Lombok, Thymeleaf, HTML, CSS
 
 ## About
 Project specifications:

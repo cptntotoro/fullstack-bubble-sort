@@ -22,7 +22,7 @@ public class ArrayServiceImpl implements ArrayService {
     private final ArrayValueRepository arrayValueRepository;
 
     @Override
-    public void add(String arrayString, String arrayName, Sort sort) {
+    public Array add(String arrayString, String arrayName, Sort sort) {
         String[] split = arrayString.split(",");
 
         int[] arrayFromString = new int[split.length];
@@ -55,6 +55,8 @@ public class ArrayServiceImpl implements ArrayService {
                 }
                 break;
         }
+
+        return arraySaved;
     }
 
     @Override
